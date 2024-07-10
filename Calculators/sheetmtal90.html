@@ -185,7 +185,7 @@
        
 
         <table id="calculationsTable">
-            <thead>
+            <!-- <thead>
                 <tr>
                     <th>#</th>
                     <th>Quantity</th>
@@ -196,7 +196,7 @@
                     <th>Total Cost</th>
                     <th>Actions</th>
                 </tr>
-            </thead>
+            </thead> -->
             <tbody>
             </tbody>
         </table>
@@ -248,11 +248,11 @@
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${index + 1}</td>
-                    <td>${calc.qty}</td>
-                    <td>${calc.x}</td>
-                    <td>${calc.y}</td>
-                    <td>${calc.sheetCostName}</td>
-                    <td>${calc.paint ? 'Yes' : 'No'}</td>
+                    <td>Quantity ${calc.qty}</td>
+                    <td>X ${calc.x}</td>
+                    <td>Y ${calc.y}</td>
+                    <td>Sheet Name${calc.sheetCostName}</td>
+                    <td>Paint ${calc.paint ? 'Yes' : 'No'}</td>
                     <td>R${calc.totalCost}</td>
                     <td>
                         <button onclick="editCalculation(${index})">Edit</button>
