@@ -1,0 +1,116 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.section {
+    flex: 1 1 calc(25% - 20px); /* Adjusting the width to fit 4 sections side by side with gaps */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #f8f8f8;
+    box-sizing: border-box;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input, select, button {
+    width: 55%;
+    padding: 10px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: rgb(130, 108, 108);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+
+/* Floating Button Styles */
+.full-width-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.full-width-button:hover {
+    background-color: #555;
+}
+
+/* Button Group Styles */
+button {
+    padding: 10px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .section {
+        margin: 10px 0;
+    }
+    
+    .form-group {
+        margin-bottom: 10px;
+    }
+    
+    h2 {
+        font-size: 1.2em;
+    }
+    
+    .full-width-button {
+        padding: 15px;
+        font-size: 1.2em;
+    }
+}
+
+
+@media (max-width: 1200px) {
+    .section {
+        flex: 1 1 calc(50% - 20px); /* Adjusting the width to fit 2 sections side by side */
+    }
+}
+
+@media (max-width: 768px) {
+    .section {
+        flex: 1 1 100%; /* Full width on smaller screens */
+    }
+}

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote Tool</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="HC HEAT 1.PNG">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>
+</head>
+
+<body>
+    <!-- Selection Section -->
+    <div class="section">
+        <h2>Select Quote Type</h2>
+        <div class="form-group">
+            <label for="quoteType">Quote Type:</label>
+            <select id="quoteType" name="quoteType">
+                <option value="">Select Type</option>
+                <option value="sheetMetal">Sheet Metal</option>
+                <option value="glacio">Glacio</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Quotation Generator Section -->
+    <div id="quotationSection" class="section" style="display:none;">
+        <form id="quotationForm">
+            <a class="navbar-brand" href="#"><img src="./IMAGES/header.png" alt=""></a>
+            <div class="form-container">
+                <div class="form-section">
+                    <h2>Business Information</h2>
+                    <div class="form-group">
+                        <label for="businessName">Business Name:</label>
+                        <input type="text" id="businessName" name="businessName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="businessAddress">Address:</label>
+                        <input type="text" id="businessAddress" name="businessAddress" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="businessPhone">Phone:</label>
+                        <input type="text" id="businessPhone" name="businessPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="businessEmail">Email:</label>
+                        <input type="email" id="businessEmail" name="businessEmail" required>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Client Information</h2>
+                    <div class="form-group">
+                        <label for="clientName">Client Name:</label>
+                        <input type="text" id="clientName" name="clientName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientAddress">Address:</label>
+                        <input type="text" id="clientAddress" name="clientAddress" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientPhone">Phone:</label>
+                        <input type="text" id="clientPhone" name="clientPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientEmail">Email:</label>
+                        <input type="email" id="clientEmail" name="clientEmail" required>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Quotation Information</h2>
+            <div class="form-group">
+                <label for="quotationDate">Quotation Date:</label>
+                <input type="date" id="quotationDate" name="quotationDate" required>
+            </div>
+            <div class="form-group">
+                <label for="validityDate">Validity Date:</label>
+                <input type="date" id="validityDate" name="validityDate" required>
+            </div>
+            <div class="form-group">
+                <label for="salesRepId">Sales Rep ID:</label>
+                <select id="salesRepId" name="salesRepId" required>
+                    <option value="">Select Sales Rep ID</option>
+                    <option value="Rep001">Rep001</option>
+                    <option value="Rep002">Rep002</option>
+                    <option value="Rep003">Rep003</option>
+                    <option value="Rep004">Rep004</option>
+                    <option value="Rep005">Rep005</option>
+                </select>
+            </div>
+        </form>
+    </div>
+
+    <!-- Sheet Metal Section -->
+    <div id="sheetMetalSection" class="section" style="display:none;">
+        <h3>Sheet Metal Quote Tool</h3>
+        <div class="Test1">
+            <div class="section1">
+                <label for="qty">Quantity:</label><br>
+                <input type="number" id="qty" name="qty"><br>
+            </div>
+            <div class="section1">
+                <label for="x">X:</label><br>
+                <input type="number" id="x" name="x"><br>
+            </div>
+            <div class="section1">
+                <label for="y">Y:</label><br>
+                <input type="number" id="y" name="y"><br>
+            </div>
+        </div>
+        <div class="section1">
+            <label for="sheetCost">Sheet Metal:</label><br>
+            <select id="sheetCost" name="sheetCost">
+                <option value="0" data-name=""></option>
+                <option value="177.24" data-name="GALV0.8">GALV0.8</option>
+                <option value="218.39" data-name="GALV1.0">GALV1.0</option>
+                <option value="259.38" data-name="GALV1.2">GALV1.2</option>
+                <option value="342.39" data-name="GALV1.6">GALV1.6</option>
+                <option value="410.89" data-name="GALV2.0">GALV2.0</option>
+                <option value="676.55" data-name="GALV3.0">GALV3.0</option>
+                <option value="282.32" data-name="1.2 AL">1.2 AL</option>
+                <option value="382.26" data-name="1.6 AL">1.6 AL</option>
+                <option value="466.88" data-name="2.0 AL">2.0 AL</option>
+                <option value="745.41" data-name="3.0 AL">3.0 AL</option>
+                <option value="684.30" data-name="SS304 0.9">SS304 0.9</option>
+                <option value="907.17" data-name="SS304 1.2">SS304 1.2</option>
+                <option value="1119.60" data-name="SS304 1.6">SS304 1.6</option>
+                <option value="1545.50" data-name="SS304 2.0">SS304 2.0</option>
+                <option value="2317.56" data-name="SS304 3.0">SS304 3.0</option>
+                <option value="415.71" data-name="SS430 0.9">SS430 0.9</option>
+                <option value="647.01" data-name="SS430 1.2">SS430 1.2</option>
+                <option value="686.83" data-name="SS430 1.6">SS430 1.6</option>
+                <option value="878.87" data-name="SS430 2.0">SS430 2.0</option>
+                <option value="2615.40" data-name="SS304 4.5">SS304 4.5</option>
+            </select><br>
+        </div>
+        <label for="paint">Add Paint:</label><br>
+        <input type="checkbox" id="paint" name="paint"><br>
+        <input type="button" value="Add Calculation" onclick="addSheetMetalCalculation()">
+    </div>
+<!--i like this layout--> 
+    <!-- Glacio Section -->
+    <div id="glacioSection" class="section" style="display:none;">
+        <h3>Glacio Quote Tool</h3>
+        <div class="Test1">
+            <div class="section1">
+                <label for="ambientType">Ambient Type:</label>
+                <select id="ambientType">
+                    <option value="">Select Ambient Type</option>
+                    <option value="SA">SA</option>
+                    <option value="HA">HA</option>
+                </select>
+            </div>
+            <div class="section1">
+                <label for="temperatureRange">Temperature Range:</label>
+                <select id="temperatureRange">
+                    <option value="">Select Temperature Range</option>
+                </select>
+            </div>
+            <div class="section1">
+                <label for="phaseType">Phase Type:</label>
+                <select id="phaseType">
+                    <option value="">Select Phase Type</option>
+                </select>
+            </div>
+            <div class="section1">
+                <label for="modelSelection">Model:</label>
+                <select id="modelSelection">
+                    <option value="">Select Model</option>
+                </select>
+            </div>
+            <div class="section1">
+                <label for="quantity">Quantity:</label>
+                <input type="number" id="quantity" min="1" value="1">
+            </div>
+        </div>
+        <input type="button" value="Add Calculation" onclick="addGlacioCalculation()">
+    </div>
+
+    <!-- Calculation Table -->
+    <table id="calculationsTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Description</th>
+                <th>Details</th>
+                <th>Total Cost</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table rows will be dynamically added here -->
+        </tbody>
+    </table>
+    
+    <p id="totalCost"></p>
+
+    <button onclick="generateQuotation()" class="full-width-button">Generate Quotation</button>
+
+    <script>
+        let calculations = [];
+
+        document.getElementById('quoteType').addEventListener('change', function() {
+            const quoteType = this.value;
+            document.getElementById('quotationSection').style.display = 'block';
+            document.getElementById('sheetMetalSection').style.display = quoteType === 'sheetMetal' ? 'block' : 'none';
+            document.getElementById('glacioSection').style.display = quoteType === 'glacio' ? 'block' : 'none';
+        });
+
+        document.getElementById('quotationDate').valueAsDate = new Date();
+
+        $(document).ready(function () {
+            const oneDay = 24 * 60 * 60 * 1000;
+            let lastResetTime = localStorage.getItem('lastResetTime');
+            let quotationCounter = localStorage.getItem('quotationCounter') || 1;
+
+            if (!lastResetTime || (new Date().getTime() - lastResetTime) > oneDay) {
+                quotationCounter = 1;
+                localStorage.setItem('lastResetTime', new Date().getTime());
+            }
+
+            const models = {
+                SA: {
+                    MT: {
+                        "230V, 50Hz, 1PH": [
+                            { name: "VP-KCJ461CAL-1A30", price: 48588.99 },
+                            { name: "VP-KCJ484CAL-2A30", price: 51666.70 },
+                            { name: "VP-CS10K7ME-PFZ-2A30", price: 55026.55 }
+                        ],
+                        "400V, 50Hz, 3PH": [
+                            { name: "VP-CS10K7ME-TFM-2A30", price: 1800 },
+                            { name: "VP-CS13K7ME-TFM-2A35", price: 2000 },
+                            { name: "VP-CS17K7ME-TFM-2A40", price: 2100 },
+                            { name: "VP-CS20K7ME-TFM-2A45", price: 2200 },
+                            { name: "VP-CS25K7ME-TFM-2A50", price: 2300 }
+                        ]
+                    },
+                    LT: {
+                        "230V, 50Hz, 1PH": [
+                            { name: "VPL-CS10K7ME-PFZ-1A30", price: 2500 }
+                        ],
+                        "400V, 50Hz, 3PH": [
+                            { name: "VPL-CS10K7ME-PFZ-2A30", price: 3000 }
+                        ]
+                    }
+                },
+                HA: {
+                    MT: {
+                        "230V, 50Hz, 1PH": [
+                            { name: "VP-KCJ461CAL-1A30", price: 48588.99 },
+                            { name: "VP-KCJ484CAL-2A30", price: 51666.70 },
+                            { name: "VP-CS10K7ME-PFZ-2A30", price: 55026.55 }
+                        ],
+                        "400V, 50Hz, 3PH": [
+                            { name: "VP-DS10K7ME-TFM-2A30", price: 2500 },
+                            { name: "VP-DS13K7ME-TFM-2A35", price: 2600 },
+                            { name: "VP-DS17K7ME-TFM-2A40", price: 2700 },
+                            { name: "VP-DS20K7ME-TFM-2A45", price: 2800 },
+                            { name: "VP-DS25K7ME-TFM-2A50", price: 2900 }
+                        ]
+                    },
+                    LT: {
+                        "230V, 50Hz, 1PH": [
+                            { name: "VPL-CS10K7ME-PFZ-1A30", price: 2500 }
+                        ],
+                        "400V, 50Hz, 3PH": [
+                            { name: "VPL-DS10K7ME-PFZ-2A30", price: 3200 }
+                        ]
+                    }
+                }
+            };
+
+            function populateDropdown(id, options) {
+                const dropdown = $(id);
+                dropdown.empty();
+                dropdown.append('<option value="">Select</option>');
+                options.forEach(option => {
+                    dropdown.append(`<option value="${option.value}" data-price="${option.price || ''}">${option.text}</option>`);
+                });
+            }
+
+            function clearForm() {
+                $('#ambientType').val('');
+                $('#temperatureRange').empty();
+                $('#phaseType').empty();
+                $('#modelSelection').empty();
+                $('#quantity').val(1);
+            }
+
+            $('#ambientType').on('change', function () {
+                const ambientType = $(this).val();
+                if (ambientType) {
+                    populateDropdown('#temperatureRange', [
+                        { value: 'MT', text: 'MT' },
+                        { value: 'LT', text: 'LT' }
+                    ]);
+                } else {
+                    $('#temperatureRange, #phaseType, #modelSelection').empty();
+                }
+            });
+
+            $('#temperatureRange').on('change', function () {
+                const ambientType = $('#ambientType').val();
+                const temperatureRange = $(this).val();
+                if (temperatureRange) {
+                    populateDropdown('#phaseType', [
+                        { value: '230V, 50Hz, 1PH', text: '230V, 50Hz, 1PH' },
+                        { value: '400V, 50Hz, 3PH', text: '400V, 50Hz, 3PH' }
+                    ]);
+                } else {
+                    $('#phaseType, #modelSelection').empty();
+                }
+            });
+
+            $('#phaseType').on('change', function () {
+                const ambientType = $('#ambientType').val();
+                const temperatureRange = $('#temperatureRange').val();
+                const phaseType = $(this).val();
+                if (ambientType && temperatureRange && phaseType) {
+                    const modelsForSelection = models[ambientType][temperatureRange][phaseType];
+                    populateDropdown('#modelSelection', modelsForSelection.map(model => ({
+                        value: model.name,
+                        text: model.name,
+                        price: model.price
+                    })));
+                } else {
+                    $('#modelSelection').empty();
+                }
+            });
+
+            $('#addCalculation').on('click', function () {
+                const quoteType = $('#quoteType').val();
+                if (quoteType === 'sheetMetal') {
+                    addSheetMetalCalculation();
+                } else if (quoteType === 'glacio') {
+                    addGlacioCalculation();
+                }
+            });
+
+            function addSheetMetalCalculation() {
+                const qty = document.getElementById('qty').value;
+                const x = document.getElementById('x').value;
+                const y = document.getElementById('y').value;
+                const sheetCostElement = document.getElementById('sheetCost');
+                const sheetCost = sheetCostElement.value;
+                const sheetCostName = sheetCostElement.options[sheetCostElement.selectedIndex].getAttribute('data-name');
+                const paint = document.getElementById('paint').checked;
+
+                if (!qty || !x || !y || !sheetCost) {
+                    alert('Please fill in all fields.');
+                    return;
+                }
+
+                const measurements = qty * x / 1000 * y / 1000;
+                const firstTotal = sheetCost * 1.25 * measurements;
+                const secondTotal = 191 * measurements;
+                const lastTotal = paint ? 90 * 1.3 * measurements : 0;
+                const totalCostOfSale = ((firstTotal + secondTotal + lastTotal) * 1.02 * 2.03).toFixed(2);
+
+                calculations.push({
+                    description: `Sheet Metal (${sheetCostName})`,
+                    details: `Qty: ${qty}, X: ${x}, Y: ${y}, Paint: ${paint ? 'Yes' : 'No'}`,
+                    totalCost: totalCostOfSale
+                });
+
+                renderTable();
+            }
+
+            function addGlacioCalculation() {
+                const modelSelection = $('#modelSelection option:selected');
+                const model = modelSelection.val();
+                const price = parseFloat(modelSelection.attr('data-price'));
+                const quantity = parseInt($('#quantity').val(), 10);
+
+                if (model && price && quantity) {
+                    const totalPrice = price * quantity;
+                    calculations.push({
+                        description: `Glacio Model (${model})`,
+                        details: `Qty: ${quantity}, Price: ${price}`,
+                        totalCost: totalPrice.toFixed(2)
+                    });
+
+                    renderTable();
+                }
+            }
+
+            function renderTable() {
+                const tableBody = document.getElementById('calculationsTable').querySelector('tbody');
+                tableBody.innerHTML = '';
+
+                calculations.forEach((calc, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${calc.description}</td>
+                        <td>${calc.details}</td>
+                        <td>R${calc.totalCost}</td>
+                        <td>
+                            <button onclick="editCalculation(${index})">Edit</button>
+                            <button onclick="deleteCalculation(${index})">Delete</button>
+                        </td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+
+                calculateTotalCost();
+            }
+
+            function editCalculation(index) {
+                const calc = calculations[index];
+                if (calc.description.startsWith('Sheet Metal')) {
+                    document.getElementById('quoteType').value = 'sheetMetal';
+                    document.getElementById('sheetMetalSection').style.display = 'block';
+                    document.getElementById('glacioSection').style.display = 'none';
+                    const details = calc.details.split(', ');
+                    document.getElementById('qty').value = details[0].split(': ')[1];
+                    document.getElementById('x').value = details[1].split(': ')[1];
+                    document.getElementById('y').value = details[2].split(': ')[1];
+                    document.getElementById('sheetCost').value = calc.description.split('(')[1].split(')')[0];
+                    document.getElementById('paint').checked = details[3].split(': ')[1] === 'Yes';
+                } else if (calc.description.startsWith('Glacio Model')) {
+                    document.getElementById('quoteType').value = 'glacio';
+                    document.getElementById('sheetMetalSection').style.display = 'none';
+                    document.getElementById('glacioSection').style.display = 'block';
+                    const details = calc.details.split(', ');
+                    $('#modelSelection').val(details[0].split(': ')[1]);
+                    $('#quantity').val(details[1].split(': ')[1]);
+                }
+
+                deleteCalculation(index);
+            }
+
+            function deleteCalculation(index) {
+                calculations.splice(index, 1);
+                renderTable();
+            }
+
+            function calculateTotalCost() {
+                const totalCost = calculations.reduce((sum, calc) => sum + parseFloat(calc.totalCost), 0).toFixed(2);
+                document.getElementById('totalCost').innerHTML = "Total Nett Price: R" + totalCost;
+            }
+
+            function generateQuotation() {
+                const form = document.getElementById('quotationForm');
+                const formData = new FormData(form);
+
+                const business = {
+                    name: formData.get('businessName'),
+                    address: formData.get('businessAddress'),
+                    phone: formData.get('businessPhone'),
+                    email: formData.get('businessEmail')
+                };
+
+                const contact = {
+                    label: "Quotation issued for:",
+                    name: formData.get('clientName'),
+                    address: formData.get('clientAddress'),
+                    phone: formData.get('clientPhone'),
+                    email: formData.get('clientEmail')
+                };
+
+                const quotationNumber = quotationCounter++;
+                const quotationDate = formData.get('quotationDate');
+                const validityDate = formData.get('validityDate');
+                const salesRepId = formData.get('salesRepId');
+
+                localStorage.setItem('quotationCounter', quotationCounter);
+
+                const items = calculations.map((item, index) => [
+                    index + 1,
+                    item.description,
+                    item.details,
+                    item.totalCost
+                ]);
+
+                const total = calculations.reduce((sum, calc) => sum + parseFloat(calc.totalCost), 0).toFixed(2);
+
+                const quotationData = {
+                    business: business,
+                    contact: contact,
+                    quotation: {
+                        num: quotationNumber,
+                        qtnDate: quotationDate,
+                        qtnGenDate: validityDate,
+                        header: [
+                            { title: "#", style: { width: 10 } },
+                            { title: "Description", style: { width: 30 } },
+                            { title: "Details", style: { width: 80 } },
+                            { title: "Total Cost" }
+                        ],
+                        table: items,
+                        additionalRows: [
+                            { col1: 'Total:', col2: total, col3: 'ALL' }
+                        ],
+                        qtnDescLabel: "Selection Note",
+                        qtnDesc: "This is Property of HC Heate there isn't anything embarrassing hidden in the middle of text."
+                    },
+                    footer: {
+                        text: "The Quotation is created on a computer and is valid without the signature and stamp."
+                    }
+                };
+
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                const headerImgSrc = './IMAGES/header.png';
+                const footerImgSrc = './IMAGES/Footer.png';
+
+                // Add header image
+                const imgWidth = 210; // Assuming A4 width
+                const imgHeight = 40; // Adjust height as needed
+                doc.addImage(headerImgSrc, 'JPEG', 0, 0, imgWidth, imgHeight);
+
+                // Add footer image
+                const footerImgWidth = 210; // Assuming A4 width
+                const footerImgHeight = 40; // Adjust height as needed
+                const footerImgX = 0;
+                const footerImgY = doc.internal.pageSize.height - footerImgHeight;
+                doc.addImage(footerImgSrc, 'JPEG', footerImgX, footerImgY, footerImgWidth, footerImgHeight);
+
+                doc.setFontSize(12);
+                doc.text(quotationData.business.name, 10, 60);
+                doc.text(quotationData.business.address, 10, 65);
+                doc.text(quotationData.business.phone, 10, 70);
+                doc.text(quotationData.business.email, 10, 75);
+
+                doc.text(`Quotation #: ${quotationData.quotation.num}`, 140, 60);
+                doc.text(`Quotation Date: ${quotationData.quotation.qtnDate}`, 140, 65);
+                doc.text(`Validity Date: ${quotationData.quotation.qtnGenDate}`, 140, 70);
+                doc.text(`Sales Rep ID: ${salesRepId}`, 140, 75);
+
+                doc.text(`${quotationData.contact.label}`, 10, 90);
+                doc.text(quotationData.contact.name, 10, 95);
+                doc.text(quotationData.contact.address, 10, 100);
+                doc.text(quotationData.contact.phone, 10, 105);
+                doc.text(quotationData.contact.email, 10, 110);
+
+                doc.autoTable({
+                    startY: 140,
+                    head: [quotationData.quotation.header.map(col => col.title)],
+                    body: quotationData.quotation.table,
+                    theme: 'grid'
+                });
+
+                const finalY = doc.lastAutoTable.finalY;
+
+                doc.setFontSize(10);
+                doc.text(`Total: ${quotationData.quotation.additionalRows[0].col2} ${quotationData.quotation.additionalRows[0].col3}`, 10, finalY + 10);
+
+                doc.setFontSize(12);
+                doc.text(quotationData.quotation.qtnDescLabel, 10, finalY + 20);
+                doc.setFontSize(10);
+                doc.text(quotationData.quotation.qtnDesc, 10, finalY + 25, { maxWidth: 190 });
+
+                const footerImg = new Image();
+                footerImg.src = '#';
+                doc.addImage(footerImg, 'JPEG', 180, doc.internal.pageSize.height - 30, 20, 20);
+                doc.setFontSize(8);
+                doc.text(quotationData.footer.text, 53, doc.internal.pageSize.height - 3);
+
+                doc.save(`${business.name}Quotation_${quotationData.quotation.num}_${salesRepId}_${quotationDate}.pdf`);
+            }
+
+            document.getElementById('generateQuotation').addEventListener('click', function () {
+                generateQuotation();
+            });
+        });
+    </script>
+    <footer>
+<img src="./IMAGES/footer.png" alt="Footer Image">
+        <p>&copy; 2022 My Company. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+

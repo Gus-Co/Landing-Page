@@ -1,0 +1,139 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    color: #000;
+    margin: 0;
+    padding: 0;
+    background-color: #818181;
+    background-image: url('./IMAGES/Background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    opacity: 0.7;
+}
+
+/* Form Styles */
+#quotationForm, .Test1, #sheetMetalSection, #glacioSection {
+    max-width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+/* Button Styles */
+button,
+input[type="button"],
+.full-width-button {
+    padding: 10px;
+    margin-top: 20px;
+    background-color: rgb(130, 108, 108);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover,
+input[type="button"]:hover,
+.full-width-button:hover {
+    background-color: #45a049;
+}
+
+/* Section Styles */
+.section {
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 20px;
+    background-color: #f8f8f8;
+}
+
+.section h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+/* Table Styles */
+table {
+    margin: auto;
+    border-collapse: collapse;
+    width: 80%;
+    margin-bottom: 20px;
+}
+
+table, th, td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* Flexbox Layouts */
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.form-section {
+    flex: 1;
+    min-width: 300px;
+    padding: 10px;
+}
+
+.Test1 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.Test1 .section1 {
+    flex: 1;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .Test1 {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .section1 {
+        margin-bottom: 10px;
+    }
+
+    .form-group input,
+    .form-group select {
+        font-size: 1em;
+        padding: 8px;
+    }
+}

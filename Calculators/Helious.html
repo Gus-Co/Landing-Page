@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zues</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="HC HEAT 1.PNG">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+</head>
+<style>
+
+
+    .Test1 {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .section1 {
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+    }
+
+    .entry {
+        margin-top: 10px;
+    }
+
+    .note-checkbox {
+        margin-left: 10px;
+    }
+
+    .note-field {
+        margin-top: 10px;
+    }
+
+    #addEntryButton {
+        margin-top: 10px;
+    }
+
+    button {
+        margin-top: 10px;
+    }
+
+    hr {
+        margin-top: 10px;
+    }
+
+    h2 {
+        margin-top: 10px;
+    }
+
+    form {
+        margin: 0 auto;
+        width: 50%;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    select {
+        margin-top: 10px;
+    }
+
+    input[type="checkbox"] {
+        margin-top: 10px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    select {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    button {
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+    }
+
+    button:hover {
+        opacity: 0.8;
+    }
+
+    hr {
+        border: 1px solid #f1f1f1;
+        margin-bottom: 25px;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    form {
+        border: 3px solid #f1f1f1;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    select {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    button {
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+    padding: 14px 20px;}
+</style>
+<body style="background-image: url(Background.png);">
+    <form id="myForm">
+        <hr>
+        <h2>Customer Information</h2>
+        <hr>
+        <div class="Test1">
+            <label for="salesName">Sales Name:</label>
+            <select id="salesName" name="salesName">
+                <option value="SalesPerson1">SalesPerson1</option>
+                <option value="SalesPerson2">SalesPerson2</option>
+                <option value="SalesPerson3">SalesPerson3</option>
+            </select>
+            <div class="section1">
+                <label for="customername">Customer:</label>
+                <input type="text" id="customername" name="customername">
+                <label for="orderDate">Order Date:</label>
+                <input type="date" id="orderDate" name="orderDate">
+                <label for="customerOrderNo">Customer Order No:</label>
+                <input type="text" id="customerOrderNo" name="customerOrderNo">
+            </div>
+            <div class="section1">
+                <label for="projectName">Project Name:</label>
+                <input type="text" id="projectName" name="projectName">
+                <label for="requiredDate">Required Date:</label>
+                <input type="date" id="requiredDate" name="requiredDate">
+                <label for="quotationNo">Quotation No:</label>
+                <input type="text" id="quotationNo" name="quotationNo">
+            </div>
+        </div>
+        <hr>
+        <h2>System Application, Capacity (KWR) Operating Conditions :</h2>
+        <hr>
+        <div class="Test1" id="dynamicEntries">
+            <div class="section1 entry" data-entry-index="1">
+                <label for="systemCapacity1">SYSTEM CAPACITY 1:</label>
+                <select id="systemCapacity1" name="systemCapacity1">
+                    <option value="None">None</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+                <label for="KW1">KW 1:</label>
+                <input type="text" id="KW1" name="KW1">
+                <label for="evaporating">EVAPORATING:</label>
+                <input type="text" id="evaporating" name="evaporating">
+                <label for="note1">Add Note:</label>
+                <input type="checkbox" id="note1_checkbox" class="note-checkbox">
+                <input type="text" id="note1" name="note1" class="note-field" style="display:none;">
+            </div>
+        </div>
+        <button type="button" id="addEntryButton">Add Entry</button>
+        <hr>
+        <button type="button" onclick="generatePDFn()">Submit</button>
+    </form>
+
+    <script>document.addEventListener('DOMContentLoaded', function () {
+    const { jsPDF } = window.jspdf;
+
+    document.getElementById('addEntryButton').addEventListener('click', addEntry);
+
+    function addEntry() {
+        const currentEntries = document.querySelectorAll('.entry').length;
+        if (currentEntries < 5) {
+            const newIndex = currentEntries + 1;
+            const entryDiv = document.createElement('div');
+            entryDiv.classList.add('section1', 'entry');
+            entryDiv.setAttribute('data-entry-index', newIndex);
+            entryDiv.innerHTML = `
+                <label for="systemCapacity${newIndex}">SYSTEM CAPACITY ${newIndex}:</label>
+                <select id="systemCapacity${newIndex}" name="systemCapacity${newIndex}">
+                    <option value="None">None</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
+                </select>
+                <label for="KW${newIndex}">KW ${newIndex}:</label>
+                <input type="text" id="KW${newIndex}" name="KW${newIndex}">
+                <label for="evaporating${newIndex}">EVAPORATING:</label>
+                <input type="text" id="evaporating${newIndex}" name="evaporating${newIndex}">
+                <label for="note${newIndex}">Add Note:</label>
+                <input type="checkbox" id="note${newIndex}_checkbox" class="note-checkbox">
+                <input type="text" id="note${newIndex}" name="note${newIndex}" class="note-field" style="display:none;">
+            `;
+            document.getElementById('dynamicEntries').appendChild(entryDiv);
+            document.getElementById(`note${newIndex}_checkbox`).addEventListener('change', toggleNoteField);
+        }
+    }
+
+    document.querySelectorAll('.note-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', toggleNoteField);
+    });
+
+    function toggleNoteField(event) {
+        const checkbox = event.target;
+        const noteField = document.getElementById(checkbox.id.replace('_checkbox', ''));
+        noteField.style.display = checkbox.checked ? 'block' : 'none';
+    }
+
+    function generatePDFn() {
+        const doc = new jsPDF();
+        const headerImgData = 'header image data here'; // Replace with actual image data
+        const footerImgData = 'footer image data here'; // Replace with actual image data
+
+        function addHeaderFooter(doc, pageNumber) {
+            doc.addImage(headerImgData, 'JPEG', 0, 0, 210, 38);
+            const pageWidth = doc.internal.pageSize.width;
+            const pageHeight = doc.internal.pageSize.height;
+            const footerHeight = 35;
+            doc.addImage(footerImgData, 'JPEG', 0, pageHeight - footerHeight, pageWidth, footerHeight);
+            doc.setFontSize(10);
+            doc.text(`Page ${pageNumber}`, pageWidth - 20, pageHeight - 3, { align: 'right' });
+        }
+
+        const formData = Array.from(document.querySelectorAll('.entry')).map(entry => {
+            const index = entry.getAttribute('data-entry-index');
+            return {
+                systemCapacity: document.getElementById(`systemCapacity${index}`).value,
+                KW: document.getElementById(`KW${index}`).value,
+                evaporating: document.getElementById(`evaporating${index}`).value,
+                note: document.getElementById(`note${index}`).value,
+            };
+        });
+
+        doc.setFont("Times");
+        doc.setFontSize(13);
+        let y = 40;
+        let x1 = 20;
+        let x2 = 110;
+        let pageNumber = 1;
+        addHeaderFooter(doc, pageNumber);
+
+        function addGroupHeader(doc, header, x, y) {
+            doc.setFont("Times", "bold");
+            doc.text(header, x, y);
+            return y + 10;
+        }
+
+        y = addGroupHeader(doc, "System Application, Capacity (KWR) Operating Conditions:", x1, y);
+
+        formData.forEach((data, index) => {
+            const yOffset = index * 10;
+
+            if (y + yOffset > 260) {
+                doc.addPage();
+                y = 35;
+                pageNumber++;
+                addHeaderFooter(doc, pageNumber);
+            }
+
+            doc.setFont("Times", "bold");
+            doc.text(`Entry ${index + 1}:`, x1, y + yOffset);
+            doc.setFont("Times", "normal");
+            doc.text(`System Capacity: ${data.systemCapacity}`, x1, y + yOffset + 10);
+            doc.text(`KW: ${data.KW}`, x1, y + yOffset + 20);
+            doc.text(`Evaporating: ${data.evaporating}`, x1, y + yOffset + 30);
+            if (data.note) {
+                doc.text(`Note: ${data.note}`, x1, y + yOffset + 40);
+            }
+        });
+
+        doc.save('PRF.pdf');
+    }
+
+    document.querySelectorAll('.note-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', toggleNoteField);
+    });
+});
+</script>
+</body>
+</html>
+    
