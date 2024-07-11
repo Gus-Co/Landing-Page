@@ -62,8 +62,8 @@
     <div class="Test1 section1">
         <form id="quotationForm">
             <a class="navbar-brand" href="#"><img src="./IMAGES/HC Letterhead 2024-12.png" alt="Header Image"></a>
-            <div class="form-container">
-                <div class="form-section">
+            <div class="form-group">
+                <div class="form-group">
                     <h2>Client Information</h2>
                     <div class="form-group">
                         <label for="clientName">Client Name:</label>
@@ -179,6 +179,10 @@
                 <label for="paint">Add Paint:</label><input type="checkbox" id="paint" name="paint">
             </div>
         </div>
+        <div>
+           
+            
+        </div>
 
         <input type="button" value="Add Item" onclick="addCalculation()">
 
@@ -247,18 +251,40 @@
             calculations.forEach((calc, index) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>Quantity ${calc.qty}</td>
-                    <td>X ${calc.x}</td>
-                    <td>Y ${calc.y}</td>
-                    <td>Sheet Name${calc.sheetCostName}</td>
-                    <td>Paint ${calc.paint ? 'Yes' : 'No'}</td>
-                    <td>R${calc.totalCost}</td>
-                    <td>
-                        <button onclick="editCalculation(${index})">Edit</button>
-                        <button onclick="deleteCalculation(${index})">Delete</button>
-                        <button onclick="previewCalculation(${index})">Preview</button>
-                    </td>
+            <tr>
+    ${index + 1}
+</tr>
+<hr>
+<tr>
+    Quantity: ${calc.qty}
+</tr>
+<hr>
+<tr>
+    X: ${calc.x}
+</tr>
+<hr.
+<tr>
+    Y: ${calc.y}
+</tr>
+<hr>
+<tr>
+    Sheet Name: ${calc.sheetCostName}
+</tr>
+<hr>
+<tr>
+    Paint: ${calc.paint ? 'Yes' : 'No'}
+</tr>
+<hr>
+<tr>
+    Total Cost: R${calc.totalCost}
+</tr>
+<hr>
+<tr>
+    <button class="edit-calculation" data-index="${index}">Edit</button>
+    <button class="delete-calculation" data-index="${index}">Delete</button>
+    <button class="preview-calculation" onclick="previewCalculation(${index})">Preview</button>
+</tr>
+
                 `;
                 tableBody.appendChild(row);
             });
