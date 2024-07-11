@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote Tool</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="HC HEAT 1.PNG">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        body {
+            padding-bottom: 50px;
+            padding-top: 25px;
+            font-family: 'Open Sans', sans-serif;
+        }
+        .error {
+            border: 1px solid red;
+        }
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+        }
+        .full-width-button {
+            width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+        }
+        .full-width-button:hover {
+            background-color: #2f312f;
+        }
+        .underline-text {
+            text-decoration: underline;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        footer {
+            
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            
+            
+        }
+        
+    </style>
+</head>
+
+<body>
+    <div class="Test1 section1">
+        <form id="quotationForm">
+            <a class="navbar-brand" href="#"><img src="./IMAGES/HC Letterhead 2024-12.png" alt="Header Image"></a>
+            <div class="form-group">
+                <div class="form-group">
+                    <h2>Client Information</h2>
+                    <div class="form-group">
+                        <label for="clientName">Client Name:</label>
+                        <input type="text" id="clientName" name="clientName" required>
+                        <div class="error-message" id="clientNameError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientAddress">Address:</label>
+                        <input type="text" id="clientAddress" name="clientAddress" required>
+                        <div class="error-message" id="clientAddressError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientPhone">Phone:</label>
+                        <input type="text" id="clientPhone" name="clientPhone" required>
+                        <div class="error-message" id="clientPhoneError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="clientEmail">Email:</label>
+                        <input type="email" id="clientEmail" name="clientEmail" required>
+                        <div class="error-message" id="clientEmailError"></div>
+                    </div>
+                  
+                </div>
+            </div>
+
+            <h2>Quotation Information</h2>
+            <div class="form-group">
+                <label for="quotationDate">Quotation Date:</label>
+                <input type="date" id="quotationDate" name="quotationDate" required>
+                <div class="error-message" id="quotationDateError"></div>
+            </div>
+            <div class="form-group">
+                <label for="validityDate">Validity Date:</label>
+                <input type="date" id="validityDate" name="validityDate" required>
+                <div class="error-message" id="validityDateError"></div>
+            </div>
+            <div class="form-group">
+                <label for="salesRepId">Sales Rep ID:</label>
+                <select id="salesRepId" name="salesRepId" required>
+                    <option value="">Select Sales Rep ID</option>
+                    <option value="Michael Jones">Michael Jones</option>
+                    <option value="Gert Van Rooyen">Gert Van Rooyen</option>
+                    <option value="Gavin Dix">Gavin Dix</option>
+                    <option value="Pollen Nkuna">Pollen Nkuna</option>
+                    <option value="Frank Davis">Frank Davis</option>
+                </select>
+                <div class="error-message" id="salesRepIdError"></div>
+            </div>
+            <div class="form-group">
+                <label for="projectName">Project Name:</label>
+                <input type="text" id="projectName" name="projectName" required>
+                <div class="error-message" id="projectNameError"></div>
+            </div>
+            <div class="form-group">
+                <label for="paymentTerm">Payment Term:</label>
+                <select id="paymentTerm" name="paymentTerm" required>
+                    <option value="">Select Payment Term</option>
+                    <option value="30 Days">30 Days</option>
+                    <option value="60 Days">60 Days</option>
+                    <option value="90 Days">90 Days</option>
+                </select>
+                <div class="error-message" id="paymentTermError"></div>
+            </div>
+
+            <button type="button" id="generateQuotation" class="full-width-button" onclick="printQuotation()">Generate Quotation</button>
+        </form>
+    </div>
+
+    <div class="Test1 section1">
+        <h3>Sheet Metal Quote Tool</h3>
+        <div>
+            <div class="section1">
+                <label for="qty">Quantity:</label><br>
+                <input type="number" id="qty" name="qty" required><br>
+                <div class="error-message" id="qtyError"></div>
+            </div>
+            <div class="section1">
+                <label for="x">X:</label><br>
+                <input type="number" id="x" name="x" required><br>
+                <div class="error-message" id="xError"></div>
+            </div>
+            <div class="section1">
+                <label for="y">Y:</label><br>
+                <input type="number" id="y" name="y" required><br>
+                <div class="error-message" id="yError"></div>
+            </div>
+            <div class="section1">
+                <label for="sheetCost">Sheet Metal:</label><br>
+                <select id="sheetCost" name="sheetCost" required>
+                    <option value="0" data-name=""></option>
+                    <option value="177.24" data-name="GALV0.8">GALV0.8</option>
+                    <option value="218.39" data-name="GALV1.0">GALV1.0</option>
+                    <option value="259.38" data-name="GALV1.2">GALV1.2</option>
+                    <option value="342.39" data-name="GALV1.6">GALV1.6</option>
+                    <option value="410.89" data-name="GALV2.0">GALV2.0</option>
+                    <option value="676.55" data-name="GALV3.0">GALV3.0</option>
+                    <option value="282.32" data-name="1.2 AL">1.2 AL</option>
+                    <option value="382.26" data-name="1.6 AL">1.6 AL</option>
+                    <option value="466.88" data-name="2.0 AL">2.0 AL</option>
+                    <option value="745.41" data-name="3.0 AL">3.0 AL</option>
+                    <option value="684.30" data-name="SS304 0.9">SS304 0.9</option>
+                    <option value="907.17" data-name="SS304 1.2">SS304 1.2</option>
+                    <option value="1119.60" data-name="SS304 1.6">SS304 1.6</option>
+                    <option value="1545.50" data-name="SS304 2.0">SS304 2.0</option>
+                    <option value="2317.56" data-name="SS304 3.0">SS304 3.0</option>
+                    <option value="415.71" data-name="SS430 0.9">SS430 0.9</option>
+                    <option value="647.01" data-name="SS430 1.2">SS430 1.2</option>
+                    <option value="686.83" data-name="SS430 1.6">SS430 1.6</option>
+                    <option value="878.87" data-name="SS430 2.0">SS430 2.0</option>
+                    <option value="2615.40" data-name="SS304 4.5">SS304 4.5</option>
+                </select>
+                <div class="error-message" id="sheetCostError"></div>
+                <label for="paint">Add Paint:</label><input type="checkbox" id="paint" name="paint">
+            </div>
+        </div>
+        <div>
+           
+            
+        </div>
+
+        <input type="button" value="Add Item" onclick="addCalculation()">
+
+       
+
+        <table id="calculationsTable">
+            <!-- <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Quantity</th>
+                    <th>X</th>
+                    <th>Y</th>
+                    <th>Sheet Metal</th>
+                    <th>Paint</th>
+                    <th>Total Cost</th>
+                    <th>Actions</th>
+                </tr>
+            </thead> -->
+            <tbody>
+            </tbody>
+        </table>
+
+        <div id="totalCost">Total Nett Price: R0.00</div>
+    </div>
+
+    <script>
+        let calculations = [];
+
+        function addCalculation() {
+            const qty = document.getElementById('qty').value;
+            const x = document.getElementById('x').value;
+            const y = document.getElementById('y').value;
+            const sheetCostElement = document.getElementById('sheetCost');
+            const sheetCost = sheetCostElement.value;
+            const sheetCostName = sheetCostElement.options[sheetCostElement.selectedIndex].getAttribute('data-name');
+            const paint = document.getElementById('paint').checked;
+
+            if (!qty || !x || !y || !sheetCost) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            const measurements = qty * x / 1000 * y / 1000;
+            const firstTotal = sheetCost * 1.25 * measurements;
+            const secondTotal = 191 * measurements;
+            const lastTotal = paint ? 90 * 1.3 * measurements : 0;
+            const totalCostOfSale = ((firstTotal + secondTotal + lastTotal) * 1.02 * 2.03).toFixed(2);
+
+            calculations.push({
+                qty,
+                x,
+                y,
+                sheetCostName,
+                sheetCost,
+                paint,
+                totalCost: totalCostOfSale
+            });
+
+            renderTable();
+        }
+
+        function renderTable() {
+            const tableBody = document.getElementById('calculationsTable').querySelector('tbody');
+            tableBody.innerHTML = '';
+
+            calculations.forEach((calc, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+            <tr>
+    ${index + 1}
+</tr>
+<hr>
+<tr>
+    Quantity: ${calc.qty}
+</tr>
+<hr>
+<tr>
+    X: ${calc.x}
+</tr>
+<hr.
+<tr>
+    Y: ${calc.y}
+</tr>
+<hr>
+<tr>
+    Sheet Name: ${calc.sheetCostName}
+</tr>
+<hr>
+<tr>
+    Paint: ${calc.paint ? 'Yes' : 'No'}
+</tr>
+<hr>
+<tr>
+    Total Cost: R${calc.totalCost}
+</tr>
+<hr>
+<tr>
+    <button class="edit-calculation" data-index="${index}">Edit</button>
+    <button class="delete-calculation" data-index="${index}">Delete</button>
+    <button class="preview-calculation" onclick="previewCalculation(${index})">Preview</button>
+</tr>
+
+                `;
+                tableBody.appendChild(row);
+            });
+
+            calculateTotalCost();
+        }
+
+        function editCalculation(index) {
+            const calc = calculations[index];
+            document.getElementById('qty').value = calc.qty;
+            document.getElementById('x').value = calc.x;
+            document.getElementById('y').value = calc.y;
+            document.getElementById('sheetCost').value = calc.sheetCost;
+            document.getElementById('paint').checked = calc.paint;
+
+            deleteCalculation(index);
+        }
+
+        function deleteCalculation(index) {
+            calculations.splice(index, 1);
+            renderTable();
+        }
+
+        function previewCalculation(index) {
+            const calc = calculations[index];
+            alert(`Preview:
+                Quantity: ${calc.qty}
+                X: ${calc.x}
+                Y: ${calc.y}
+                Sheet Metal: ${calc.sheetCostName}
+                Paint: ${calc.paint ? 'Yes' : 'No'}
+                Total Cost: R${calc.totalCost}`);
+        }
+
+        function calculateTotalCost() {
+            const totalCost = calculations.reduce((sum, calc) => sum + parseFloat(calc.totalCost), 0).toFixed(2);
+            document.getElementById('totalCost').innerHTML = "Total Nett Price: R" + totalCost;
+        }
+
+        function getNextQuotationNumber() {
+            return Math.floor(Math.random() * 1000000);
+        }
+
+        function resetDailyCount() {
+            const currentDate = new Date().toISOString().slice(0, 10);
+            const storedDate = localStorage.getItem('quoteDate');
+            if (storedDate !== currentDate) {
+                localStorage.setItem('quoteDate', currentDate);
+                localStorage.setItem('quoteCount', '0');
+            }
+        }
+
+        function getNextQuoteCount() {
+            let quoteCount = parseInt(localStorage.getItem('quoteCount'), 10) || 0;
+            quoteCount += 1;
+            localStorage.setItem('quoteCount', quoteCount.toString());
+            return quoteCount;
+        }
+
+        async function loadImage(src) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = () => resolve(img);
+                img.onerror = () => reject(new Error('Failed to load image'));
+                img.src = src;
+            });
+        }
+
+        async function printQuotation() {
+            try {
+                resetDailyCount();
+                const formData = new FormData(document.getElementById('quotationForm'));
+
+                const contact = {
+                    label: "ATTENTION:",
+                    name: formData.get('clientName'),
+                    address: formData.get('clientAddress'),
+                    phone: formData.get('clientPhone'),
+                    email: formData.get('clientEmail')
+                };
+
+                const total = calculations.reduce((sum, calc) => sum + parseFloat(calc.totalCost), 0).toFixed(2);
+
+                const quotationData = {
+                    project: formData.get('projectName'),
+                    paymentTerm: formData.get('paymentTerm'),
+                    quotation: {
+                        num: getNextQuotationNumber(),
+                        qtnDate: formData.get('quotationDate'),
+                        validityDate: formData.get('validityDate'),
+                        header: [
+                            { title: "Quantity" },
+                            { title: "X" },
+                            { title: "Y" },
+                            { title: "Sheet Metal" },
+                            { title: "Paint" },
+                            { title: "Total Cost" }
+                        ],
+                        table: calculations.map(calc => [
+                            calc.qty,
+                            calc.x,
+                            calc.y,
+                            calc.sheetCostName,
+                            calc.paint ? 'Yes' : 'No',
+                            `R${calc.totalCost}`
+                        ]),
+                        additionalRows: [
+                            { col1: "Total", col2: `R${total}`, col3: "" }
+                        ]
+                    },
+                    footer: {
+                        text: "For HC Heat-Exchargers(PTY) LTD.                                                                                        Sign: ____________________ Date: _______________",
+                        margin: [55, 55],
+                        alignment: "center"
+                    },
+                    contact: contact
+                };
+
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                const headerImgSrc = './IMAGES/header.png';
+                const headerImg = await loadImage(headerImgSrc);
+                const imgWidth = 215;
+                const imgHeight = 40;
+                doc.addImage(headerImg, 'PNG', 0, 0, imgWidth, imgHeight);
+
+                const footerImgSrc = './IMAGES/footer.png';
+                const footerImg = await loadImage(footerImgSrc);
+                const footerImgWidth = 210;
+                const footerImgHeight = 40;
+                const footerImgX = 0;
+                const footerImgY = doc.internal.pageSize.height - footerImgHeight;
+                doc.addImage(footerImg, 'PNG', footerImgX, footerImgY, footerImgWidth, footerImgHeight);
+
+                doc.setFontSize(12);
+                doc.text(`Project: ${quotationData.project}`, 140, 50);
+                doc.text(`Payment Term: ${quotationData.paymentTerm}`, 140, 55);
+                doc.text(`Quotation #: ${quotationData.quotation.num}`, 140, 60);
+                doc.text(`Quotation Date: ${quotationData.quotation.qtnDate}`, 140, 65);
+                doc.text(`Validity Date: ${quotationData.quotation.validityDate}`, 140, 70);
+                const salesRepId = formData.get('salesRepId');
+                doc.text(`Sales Rep ID: ${salesRepId}`, 140, 75);
+
+                doc.text(`${quotationData.contact.label}`, 10, 60);
+                const contactFields = ['name', 'address', 'phone', 'email'];
+                let contactY = 65;
+                contactFields.forEach(field => {
+                    doc.text(quotationData.contact[field], 10, contactY);
+                    contactY += 5;
+                });
+
+                doc.setFontSize(9);
+                doc.text("We thank you for your enquiry and have pleasure in quoting as follows for your consideration:", 35, 85);
+                doc.autoTable({
+                    startY: 87,
+                    head: [quotationData.quotation.header.map(col => col.title)],
+                    body: quotationData.quotation.table,
+                    theme: 'grid'
+                });
+
+                const finalY = doc.lastAutoTable.finalY;
+
+                doc.setFontSize(10);
+                quotationData.quotation.additionalRows.forEach((row, index) => {
+                    doc.text(`${row.col1}: ${row.col2} ${row.col3}`, 10, finalY + 10 + (index * 5));
+                });
+
+                doc.setFontSize(8);
+                const deliveryText = `
+        Delivery : 1: Net ex works                                    
+        2: Anticipated Delivery: 6 Working Weeks From Receipt of Order.
+        3: Delivery time quoted is an indication only, subject to work load at time of receipt of order.
+        Third Party Inspections : Third Party Inspection to your account.
+        General: We thank you for the above enquiry, Should you have any queries please do not hesitate to contact the undersigned.
+        When placing order please reference our quotation number.
+        The Quotation is created on a computer and is valid without the signature and stamp.
+        
+        Bank : Standard Bank, Branch : Melville - 006105, Ac. No : 401030741, SWIFT CODE SBZAZAJJ.
+                   
+        N.B. -This Quotation is subject to RAMSA Standard Terms & Conditions. A copy is available on request
+             -Prices quoted exclude all Taxes, VAT, Duties and/or Levies.
+             -This Quote is valid to drawing or sample quoted. Any changes will be requoted
+             - The equipment offered Is manufactured to HC HEAT-EXCHANGERS (PTY) LTD Standards and may not comply with Purchaser's
+                specification ...'
+        * PLEASE NOTE - A MINIMUM 10% CANCELLATION FEE WILL BE CHARGED ON ORDERS THAT ARE CANCELLED PRIOR TO PRODUCTION
+                `;
+                doc.text(deliveryText, 10, finalY + 20);
+
+                doc.text(quotationData.footer.text, 10, doc.internal.pageSize.height - 20);
+
+                const currentDate = new Date().toISOString().slice(0, 10);
+                const clientName = formData.get('clientName').replace(/\s+/g, '_');
+                const quoteCount = getNextQuoteCount();
+                const fileName = `Q_${salesRepId}_${clientName}_${currentDate}_${quoteCount}.pdf`;
+
+                doc.save(fileName);
+            } catch (error) {
+                console.error('Error generating PDF:', error);
+                alert('An error occurred while generating the PDF. Please try again.');
+            }
+        }
+    </script>
+</body>
+<footer>
+    <img src="./IMAGES/footer HC Letterhead-15.png" alt="Footer Image" width="100%" height="3">
+    <p style="text-align: center;">&copy; 2024 HC HEAT HEAT-EXCHANGERS. All rights reserved.</p>
+</footer>
+
+</html>
